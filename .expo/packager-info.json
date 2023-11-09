@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "packagerPort": 19000,
   "expoServerNgrokUrl": "https://rn-82p.anonymous.trabajofinaldai.exp.direct",
   "packagerNgrokUrl": "https://rn-82p.anonymous.trabajofinaldai.exp.direct",
-  "ngrokPid": 14032,
+  "ngrokPid": 16608,
   "packagerPid": null,
   "webpackServerPort": null
 }
