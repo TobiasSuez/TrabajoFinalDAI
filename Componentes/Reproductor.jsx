@@ -9,6 +9,7 @@ export default function Reproductor() {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [position, setPosition] = React.useState(0);
   const [duration, setDuration] = React.useState(0);
+  const [volume, setVolume] = React.useState(1);
 
   async function playSound() {
     if (sound) {
@@ -33,7 +34,11 @@ export default function Reproductor() {
       setIsPlaying(true);
     }
   }
-
+  async function changeVolume(value) {
+    this.setState({ volume: value });
+    await this.sound1.setVolumeAsync(value);
+    await this.sound2.setVolumeAsync(value);
+  }
   async function skipToNext() {
     if (sound) {
       // Implementa lógica para saltar a la siguiente canción
@@ -65,9 +70,13 @@ export default function Reproductor() {
 
     return () => {
       clearInterval(interval);
-      sound && sound.unloadAsync();
+      sound;
     };
   }, [isPlaying, sound]);
+  async function changeVolume(value) {
+    setVolume(value);
+    await sound.setVolumeAsync(value);
+  }
 
   return (
     <View style={styles.container}>
@@ -105,6 +114,18 @@ export default function Reproductor() {
         <TouchableOpacity onPress={skipToNext}>
           <AntDesign name="stepforward" size={24} color="black" />
         </TouchableOpacity>
+      </View>
+      <View style={styles.sliderContainer}>
+        <AntDesign name="sound" size={24} color="black" />
+        <Slider
+          style={{ flex: 1 }}
+          minimumValue={0}
+          maximumValue={1}
+          value={volume}
+          minimumTrackTintColor="#000000"
+          maximumTrackTintColor="#000000"
+          onValueChange={changeVolume}
+        />
       </View>
     </View>
   );
