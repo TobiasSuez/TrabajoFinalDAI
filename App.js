@@ -1,13 +1,22 @@
 import React from 'react';
-import NavBar from './Componentes/NavBar';
 import { NavigationContainer } from '@react-navigation/native';
-import AppNavigation from './Navigation/AppNavigation'
-const App = () => {
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Reproductor from './Componentes/Reproductor';
+import AudioList from './Componentes/AudioList';
+const Tab = createBottomTabNavigator();
+
+export default function App() {
   return (
     <NavigationContainer>
-      <AppNavigation/>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: 'blue',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Reproductor" component={Reproductor} />
+        <Tab.Screen name="PlayList" component={AudioList} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-};
-
-export default App;
+}

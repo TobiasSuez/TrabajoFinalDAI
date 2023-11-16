@@ -1,15 +1,23 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Audio } from "expo-av";
 import { AntDesign } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
+import * as Notifications from 'expo-notifications';
 
 export default function Reproductor() {
-  const [sound, setSound] = React.useState();
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const [position, setPosition] = React.useState(0);
-  const [duration, setDuration] = React.useState(0);
-  const [volume, setVolume] = React.useState(1);
+  const [sound, setSound] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+
+  useEffect(() => {
+    if (position === duration && duration > 0) {
+      // La reproducción ha llegado al final
+      sendNotification();
+    }
+  }, [position, duration]);
 
   async function playSound() {
     if (sound) {
@@ -34,21 +42,13 @@ export default function Reproductor() {
       setIsPlaying(true);
     }
   }
-  async function changeVolume(value) {
-    this.setState({ volume: value });
-    await this.sound1.setVolumeAsync(value);
-    await this.sound2.setVolumeAsync(value);
-  }
+
   async function skipToNext() {
-    if (sound) {
-      // Implementa lógica para saltar a la siguiente canción
-    }
+    // Implementa lógica para saltar a la siguiente canción
   }
 
   async function skipToPrevious() {
-    if (sound) {
-      // Implementa lógica para retroceder a la canción anterior
-    }
+    // Implementa lógica para retroceder a la canción anterior
   }
 
   const onPlaybackStatusUpdate = (status) => {
@@ -58,21 +58,20 @@ export default function Reproductor() {
     }
   };
 
-  React.useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setPosition((prevPosition) => prevPosition + 100); // Actualiza la posición cada 100 milisegundos
-      }, 100);
-    } else {
-      clearInterval(interval);
+  async function sendNotification() {
+    try {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "¡Canción finalizada!",
+          body: "Tu notificación de canción finalizada",
+        },
+        trigger: null, // Envía la notificación inmediatamente
+      });
+    } catch (error) {
+      console.error("Error al enviar la notificación:", error);
     }
+  }
 
-    return () => {
-      clearInterval(interval);
-      sound;
-    };
-  }, [isPlaying, sound]);
   async function changeVolume(value) {
     setVolume(value);
     await sound.setVolumeAsync(value);
@@ -80,12 +79,6 @@ export default function Reproductor() {
 
   return (
     <View style={styles.container}>
-      {/* Imagen redonda */}
-      <Image
-        source={require("../assets/Foto1.jpg")} // Reemplaza con la ruta correcta de tu imagen
-        style={styles.roundImage}
-      />
-
       <View style={styles.sliderContainer}>
         <Slider
           style={{ flex: 1 }}
@@ -153,7 +146,7 @@ const styles = StyleSheet.create({
   roundImage: {
     width: 100,
     height: 100,
-    borderRadius: 50, // Hace que la imagen sea redonda
-    marginBottom: 10, // Ajusta según sea necesario
+    borderRadius: 50,
+    marginBottom: 10,
   },
 });

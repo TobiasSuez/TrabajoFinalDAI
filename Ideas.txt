@@ -1,2 +1,0 @@
-4 funcionalidades: usarAudio,pushNotification,flatList,fileSystem
-
