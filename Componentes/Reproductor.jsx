@@ -13,9 +13,22 @@ export default function Reproductor() {
   const [volume, setVolume] = useState(1);
 
   useEffect(() => {
+    (async () => {
+      
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to receive notifications was denied');
+      }
+
+      
+      sendNotification("¡Bienvenido!", "Gracias por usar la aplicación");
+    })();
+  }, []);
+
+  useEffect(() => {
     if (position === duration && duration > 0) {
-      // La reproducción ha llegado al final
-      sendNotification();
+      console.log("Sending notification...");
+      sendNotification("¡Canción finalizada!", "Tu notificación de canción finalizada");
     }
   }, [position, duration]);
 
@@ -31,7 +44,7 @@ export default function Reproductor() {
     } else {
       console.log("Loading Sound");
       const { sound, status } = await Audio.Sound.createAsync(
-        require("../assets/TanBionica-CiudadMágica.mp3"),
+        require("../assets/Brazuca.mp3"),
         { shouldPlay: true },
         onPlaybackStatusUpdate
       );
@@ -58,14 +71,14 @@ export default function Reproductor() {
     }
   };
 
-  async function sendNotification() {
+  async function sendNotification(title, body) {
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "¡Canción finalizada!",
-          body: "Tu notificación de canción finalizada",
+          title,
+          body,
         },
-        trigger: null, // Envía la notificación inmediatamente
+        trigger: null,
       });
     } catch (error) {
       console.error("Error al enviar la notificación:", error);
