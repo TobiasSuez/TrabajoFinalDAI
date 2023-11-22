@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity,Image } from 'react-native';
 import { Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 
 const QR = () => {
@@ -10,7 +10,7 @@ const QR = () => {
   return (
     <View style={styles.container}>
       <Text>QR</Text>
-      <Image source={require('../qrcode.gif')} />
+      <Image source={require('../qrcode.jpg')} />
     </View>
   );
 };

@@ -1,9 +1,8 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "webpackServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://cp-54h.anonymous.daifinal.exp.direct",
+  "packagerNgrokUrl": "https://cp-54h.anonymous.daifinal.exp.direct",
+  "ngrokPid": 5796,
+  "webpackServerPort": null
 }

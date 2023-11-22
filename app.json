@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TrabajoFinalDai",
-    "slug": "TrabajoFinalDai",
+    "name": "daiFinal",
+    "slug": "daiFinal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

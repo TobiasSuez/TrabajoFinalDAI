@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Reproductor from './Componentes/Reproductor';
 import AudioList from './Componentes/AudioList';
-import  Notification  from './Componentes/notification';
 import QR from './Componentes/QRplaylist';
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +17,6 @@ export default function App() {
       >
         <Tab.Screen name="Reproductor" component={Reproductor} />
         <Tab.Screen name="PlayList" component={AudioList} />
-        <Tab.Screen name="notification" component={Notification} />
         <Tab.Screen name="QR" component={QR} />
       </Tab.Navigator>
     </NavigationContainer>
